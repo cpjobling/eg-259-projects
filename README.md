@@ -24,9 +24,9 @@ interface as you will have seen from the recording of the session.
 
 <note>If you want to run Rails using a virtual machine, you can skip the
 next step and instead go to GitHub and clone the project
-[[https://github.com/cpjobling/eg-259-rails|github.com/cpjobling/eg-259-rails]].
+[github.com/cpjobling/eg-259-rails](https://github.com/cpjobling/eg-259-rails).
 You then need to go through the configuration steps detailed in the
-[[https://github.com/cpjobling/eg-259-rails/blob/master/README.md|README.md]]
+[README.md](https://github.com/cpjobling/eg-259-rails/blob/master/README.md)
 file to install ruby and install the dependencies that will enable the
 Rails project to be run inside a virtual Ubuntu server.
 
@@ -57,7 +57,7 @@ Open http://localhost:3000/ in browser.
 ===== 3. Configure database =====
  
   * Rails comes preconfigured to use a lightweight, open-source SQL
-    database called [[http://www.sqlite.org/|SQLite3]]((I discovered
+    database called [SQLite3](http://www.sqlite.org/)((I discovered
 yesterday that PHP 5 includes SQLite3 too.)). The configuration file is
 ''..\eg-259-rails\config\database.yml'':
 <code yaml>
