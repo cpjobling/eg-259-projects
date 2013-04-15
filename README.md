@@ -1,26 +1,26 @@
-====== Live "Ruby on Rails" Demo ======
+# Live "Ruby on Rails" Demo
 
 
-These are the steps performed live in [[eg-259:lecture20|Contact Hour
-22]]. I have shown the steps based on a Windows installation. To install
+These are the steps performed live in [Contact Hour
+22](http://www.cpjobling.me/dokuwiki/eg-259:lecture20). I have shown the steps based on a Windows installation. To install
 Rails on Windows you are recommended to use
-[[http://railsinstaller.org/|RailsInstaller]]. 
+[RailsInstaller](http://railsinstaller.org/). 
 
 The Macintosh comes with Ruby pre-installed and to install rails you
 just need to follow these steps((Adapted from Sam Ruby, Dave Thomas and
 David Heinermeier Hansson, //Agile Web Development with Rails//, 4th
 Edition, 2011)):
 
-  sudo gem update --system
-  sudo gem uninstall ruby-gems-update
-  sudo gem install rails
-  sudo gem install sqlite3 
+    sudo gem update --system
+    sudo gem uninstall ruby-gems-update
+    sudo gem install rails
+    sudo gem install sqlite3 
 
 In action, the Mac, being a Unix system, has a different command line
-interface as you will have seen from the recording of the lecture.
+interface as you will have seen from the recording of the session.
 
 
-===== 1. Create the rails application =====
+## 1. Create the rails application 
 
 <note>If you want to run Rails using a virtual machine, you can skip the
 next step and instead go to GitHub and clone the project
