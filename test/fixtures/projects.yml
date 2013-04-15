@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  title: MyString
+  description: MyText
+  discipline: MyText
+  supervisor: MyText
+  research_centre: MyText
+
+two:
+  title: MyString
+  description: MyText
+  discipline: MyText
+  supervisor: MyText
+  research_centre: MyText
