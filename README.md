@@ -7,9 +7,7 @@ Rails on Windows you are recommended to use
 [RailsInstaller](http://railsinstaller.org/). 
 
 The Macintosh comes with Ruby pre-installed and to install rails you
-just need to follow these steps((Adapted from Sam Ruby, Dave Thomas and
-David Heinermeier Hansson, //Agile Web Development with Rails//, 4th
-Edition, 2011)):
+just need to follow these steps<sup><a href="#fn1" id="link_fn1">1)</a></sup>:
 
     sudo gem update --system
     sudo gem uninstall ruby-gems-update
@@ -22,41 +20,37 @@ interface as you will have seen from the recording of the session.
 
 ## 1. Create the rails application 
 
-**Note* If you want to run Rails using a virtual machine, you can skip the
-next step and instead go to GitHub and clone the project
-[github.com/cpjobling/eg-259-rails](https://github.com/cpjobling/eg-259-rails).
+**Note** If you want to run Rails using a virtual machine, you can skip this step and instead go to GitHub and clone the project
+[github.com/cpjobling/eg-259-rails](https:*github.com/cpjobling/eg-259-rails).
 You then need to go through the configuration steps detailed in the
-[README.md](https://github.com/cpjobling/eg-259-rails/blob/master/README.md)
+[README.md](https:*github.com/cpjobling/eg-259-rails/blob/master/README.md)
 file to install ruby and install the dependencies that will enable the
 Rails project to be run inside a virtual Ubuntu server.
 
 It will take longer, but you'll get some insight into the environment
 that Rails runs in inside a production server.
- 
-    C:\Users\cpjobling>rails new eg-259-rails
 
-
-
+    C:\Users\cpjobling>rails new eg-259-projects
 
 
 ## 2. Start rails application and show default page
 
-    C:\Users\cpjobling>cd eg-259-rails
-    C:\Users\cpjobling\eg-259-rails> bundle install
-    C:\Users\cpjobling\eg-259-rails> bundle exec rails server
+    C:\Users\cpjobling>cd eg-259-projects
+    C:\Users\cpjobling\eg-259-projects> bundle install
+    C:\Users\cpjobling\eg-259-projects> bundle exec rails server
 
-Open http://localhost:3000/ in browser.
-
-
+Open <http://localhost:3000/> in browser.
 
 
-===== 3. Configure database =====
+
+
+## 3. Configure database
  
-  * Rails comes preconfigured to use a lightweight, open-source SQL
-    database called [SQLite3](http://www.sqlite.org/)((I discovered
-yesterday that PHP 5 includes SQLite3 too.)). The configuration file is
-''..\eg-259-rails\config\database.yml'':
-<code yaml>
+ * Rails comes preconfigured to use a lightweight, open-source SQL
+    database called [SQLite3](http://www.sqlite.org/)<sup><a href="#fn2" id="link_fn2">2)</a></sup>. The configuration file is
+`..\eg-259-projects\config\database.yml`:
+
+``` yaml
 # SQLite version 3.x
 #   gem install sqlite3
 development:
@@ -79,7 +73,7 @@ production:
   database: db/production.sqlite3
   pool: 5
   timeout: 5000
-</code>
+```
 To run rails with these defaults, you need do no more to configure your
 databases.
 
@@ -87,7 +81,8 @@ It's a good idea to stick with SQLite3 for development and testing, but
 for deployment you may need a more capable database engine. Luckily, you
 can also configure Rails to use MySQL in deployment, in which case you'd
 edit the last entry of the configuration file to read: 
-<code yaml>
+
+```yaml
 deployment:
   adapter: mysql
   encoding: utf8
@@ -95,43 +90,44 @@ deployment:
   username: root
   password:
   host: localhost
-</code>
-You would then need to use //phpMyAdmin// or the //mysql// command to
-create the database //songs_production// and set up suitable user
-permissions((The example assumes MySQL in its default state with no root
-password, which of course you should never use in a live deployment!)).
+```
+
+You would then need to use *phpMyAdmin* or the *mysql* command to
+create the database *songs_production* and set up suitable user
+permissions<sup><a href="#fn3" id="link_fn3">3)</a></sup>.
 
 
 
 
-===== 4. Create a projects model and a projects controller =====
+## 4. Create a projects model and a projects controller
 
 
 Stop (<key>C - c</key>) the web application then create a model to
 represent the for the songs table and its associated controller and
 views.
-<cli prompt=">">
-C:\Users\cpjobling\eg-259-rails>rails generate scaffold project
-title:string description:text discipline:string supervisor:string
-research_centre:string
-</cli>
+
+    C:\Users\cpjobling\eg-259-projects>rails generate scaffold project title:string description:text discipline:string supervisor:string research_centre:string
+
 Examine the generated files for the model
-''..\eg-259-rails\app\models\project.rb'':
-<code ruby>
+`..\eg-259-projects\app\models\project.rb`:
+
+```ruby
 class Project < ActiveRecord::Base
-  attr_accessible :description, :discipline, :research_centre,
-:supervisor, :title
+  attr_accessible :title, :description, 
+                 :discipline, :research_centre,
+                 :supervisor
 end
-</code>
+```
+
 Note that most of the default behaviour for the model is abstracted into
-the superclass ''ActiveRecord::Base''. We only need to define
+the superclass `ActiveRecord::Base`. We only need to define
 specialisms, most of the behaviour is inherited. This is another example
-of //DRY// and //Convention over Configuration//. 
+of *DRY* and *Convention over Configuration*. 
 
 The (page) controller
-''..\eg-259-rails\app\controllers\projects_controller.rb'' is a little
+`..\eg-259-projects\app\controllers\projects_controller.rb` is a little
 more complex:
-<code ruby>
+```ruby
 class ProjectsController < ApplicationController
   # GET /projects
   # GET /projects.json
@@ -220,41 +216,45 @@ successfully updated.' }
     end
   end
 end
-</code>
+```
+
 The apparent complexity is because methods have been provided to support
-the so-called //RESTful interface// that Rails provides. It is another
-example of //convention over configuration//. In fact when you look at
+the so-called *RESTful interface* that Rails provides. It is another
+example of *convention over configuration*. In fact when you look at
 the code, there are 7 methods which the controller implements:
-  - show the list of projects (//index//)
-  - display an individual project (//show//)
-  - create a new project (//new//) ...
-  - and add it to the database (//create//)
-  - change an existing project (//edit//) and ...
-  - store the changed project in the database (//update//), and
-  - delete a project from the database (//destroy//).
+
+1. show the list of projects (*index*)
+2. display an individual project (*show*)
+3. create a new project (*new*) ...
+4. and add it to the database (*create*)
+5. change an existing project (*edit*) and ...
+6. store the changed project in the database (*update*), and
+7. delete a project from the database (*destroy*).
   
 Note the use of the HTML verbs GET, PUT, POST, DELETE in each of these
 cases, the URLs that are associated with each action, and also note that
-both HTML (the default) and XML are supported resource
-types((JavaScript, e.g. for Ajax with JSON can also be used)).
+both HTML (the default) and JSON are supported resource
+types<sup><a href="#fn4" id="link_fn4">4)</a></sup>.
 
-The //scaffolding// command that was added to the ''rails generate''
+The *scaffolding* command that was added to the `rails generate`
 instruction has also created suitable HTML code to allow the data to be
-displayed in the web application. The views (examples of the //Template
-View// pattern) are stored in ''..\eg-259-rails\app\views\projects'' and
-there is a view for each of the browser actions //edit//, //index//,
-//new// and //show//. 
+displayed in the web application. The views (examples of the *Template
+View* pattern) are stored in `..\eg-259-projects\app\views\projects` and
+there is a view for each of the browser actions *edit*, *index*,
+*new* and *show*. 
 
-For example the //new// view is:
-<code html>
+For example the *new* view is:
+
+```html
 <h1>New project</h1>
 
 <%= render 'form' %>
 
 <%= link_to 'Back', projects_path %>
-</code>
+```
 and the form is
-<code html>
+
+```html
 <%= form_for(@project) do |f| %>
   <% if @project.errors.any? %>
     <div id="error_explanation">
@@ -293,11 +293,11 @@ this project from being saved:</h2>
     <%= f.submit %>
   </div>
 <% end %>
-</code>
+```
 
-Finally, the ''rails generate'' command created a database //migration//
+Finally, the `rails generate` command created a database *migration*
 file:
-<code ruby>
+```ruby
 class CreateProjects < ActiveRecord::Migration
   def change
     create_table :projects do |t|
@@ -311,44 +311,43 @@ class CreateProjects < ActiveRecord::Migration
     end
   end
 end
-</code>
+```
 which uses ruby to provide a database agnostic way of creating and
 updating the database. We use the migration to create the database by
 running
-<cli prompt=">">
-C:\Users\cpjobling\eg-259-rails>rake db:migrate
-</cli>
-The file naming convention, e.g.  ''20130414145709_create_projects'',
+
+    C:\Users\cpjobling\eg-259-projects>rake db:migrate
+
+The file naming convention, e.g.  `20130414145709_create_projects`,
 includes a time-stamp to ensure that migrations are applied in the
 correct order.
 
 If you use test-driven development (and Rails strongly encourages you to
 do so) you would also prepare the test database by executing:
-<cli prompt=">">
-C:\Users\cpjobling\eg-259-rails>rake db:test:prepare
-</cli>
-===== 5. Use a seed file to populate the database with some initial data
-=====
+ 
+    C:\Users\cpjobling\eg-259-projects>rake db:test:prepare
 
-The ''rails new'' command also creates a ruby file
-''..\eg-259-rails\db\seeds.rb'' that can be used to populate the
+## 5. Use a seed file to populate the database with some initial data
+
+The `rails new` command also creates a ruby file
+`..\eg-259-projects\db\seeds.rb` that can be used to populate the
 database with some initial data:
-<cli prompt=">">
-C:\Users\cpjobling> rake db:seed
-</cli>
+
+    C:\Users\cpjobling> rake db:seed
+
 We edit this file to add some data. In Rails, we can create a new data
 record using:
-<code ruby>
+```ruby
 Project.create(title: "Project 1", 
   supervisor: "Prof. Good Teacher", 
   research_centre: "Materials Research Centre",
   discipline: "ICCT",
   description: "<p>Some HTML</p>")
-</code>
-This makes use of the //Project// constructor((Actually the
-//ActiveRecord// constructor.)) as a generator for a new record. After
+```
+This makes use of the *Project* constructor<sup><a href="#fn5" id="link_fn5">5)</a></sup>  Actually the
+*ActiveRecord* constructor. as a generator for a new record. After
 editing, the complete migration is:
-<code ruby>
+```ruby
 # This file should contain all the record creation needed to seed the
 database with its default values.
 # The data can then be loaded with the rake db:seed (or created
@@ -501,58 +500,62 @@ projects = Project.create(
     }
   ]
 )
-</code>
+```
 
-<note>If you look at the code in the ''projects_controller'' you'll see
-that the ''create'' action is used like this:
-<code ruby>
+**Note** If you look at the code in the `projects_controller` you'll see
+that the `create` action is used like this:
+```ruby
 @project = Project.new(params[:project])
-</code>
-This takes the ''parameter'' variable((A //hash// or //dictionary//))
-from the web browser (equivalent to ''$_POST'' in PHP) to populate the
+```
+This takes the `parameter` variable<sup><a href="#fn6" id="link_fn6">6)</a></sup>
+from the web browser (equivalent to `$_POST` in PHP) to populate the
 data record.</note>
-===== 6. Demonstrate the CRUD behaviour =====
+
+## 6. Explore the CRUD behaviour
 
 Restart the application web server:
-<cli prompt=">">
-C:\Users\cpjobling\eg-259-rails>bundle exec rails server
-</cli>
 
-Open a web browser and browse to http://localhost:3000/projects/
+    C:\Users\cpjobling\eg-259-projects>bundle exec rails server
 
-Create a new project, list projects, update projects, delete a project:
+
+Open a web browser and browse to <http://localhost:3000/projects/>
+
+Create list projects, create a new project, update a project, delete a project:
 i.e. demonstrate Create Retrieve Update Delete (CRUD) interface that is
 typical for many web-fronted database applications. Observe the URIs for
 each case.
 
 Note that all the behaviour (mapping URIs to model methods and
-parameters) is inherited from ''ActionController'' and all the
-presentation (HTML views) were created by the ''scaffolding'' option
+parameters) is inherited from `ActionController` and all the
+presentation (HTML views) were created by the `scaffold` option
 used when the model was created.
-===== 7. Validate the form data =====
+
+## 7. Validate the form data
 
 Add validation to a field of the model:
-<code ruby>
+```ruby
 class Project < ActiveRecord::Base
-  attr_accessible :description, :discipline, :research_centre,
-:supervisor, :title
+  attr_accessible :title. :description
+                  :discipline, :research_centre,
+                  :supervisor
   
   validates :description, :title, :discipline, :presence => true
 end
 
-</code>
+```
 Create a new song or edit an existing one to show that the validator
 works.
 
-===== 8. Examine "scaffold" code =====
+## 8. Examine "scaffold" code
 
 In addition to creating the controller and the migration file, the
 scaffold command
 created a view for each default action in the controller (i.e.
-//index//, //new//, //edit//, //show//). Examine and edit the view
-templates (located in ''..\eg-259-rails\app\views\projects\''). This is
-''..\eg-259-rails\app\views\projects\index.html.erb'':
-<code html>
+*index*, *new*, *edit*, *show*). Examine and edit the view
+templates (located in `..\eg-259-projects\app\views\projects\`). This is
+`..\eg-259-projects\app\views\projects\index.html.erb`:
+
+```html
 <h1>Listing projects</h1>
 
 <table>
@@ -585,15 +588,29 @@ confirm: 'Are you sure?' } %></td>
 <br />
 
 <%= link_to 'New Project', new_project_path %>
-</code>
+```
 
 The things to note about this is that the code is HTML with ruby
-embedded between template marker tags ''<% .. %>''. The code is
+embedded between template marker tags `<% .. %>`. The code is
 relatively easy to understand. Also note that this template can be
 embedded at run time into a template defined in
-''..\eg-259-rails\app\views\layouts''. This is where you would create a
+`..\eg-259-projects\app\views\layouts`. This is where you would create a
 wrapper file that was valid HTML 5 and loaded the required stylesheets
-and client-side JavaScript libraries((Although Rails has it's own
-conventions for this that makes use off the //Assets Pipeline//.)).
- 
+and client-side JavaScript librariessup><a href="#fn7" id="link_fn7">7)</a></sup>.
 
+
+## Footnotes
+
+<a id="fn1" href="#link_fn1">1)</a> Adapted from Sam Ruby, Dave Thomas and David Heinermeier Hansson, *Agile Web Development with Rails*, 4th Edition, 2011.
+
+<a id="fn2" href="#link_fn2">2)</a> I discovered last year that PHP 5 includes SQLite3 too.
+
+<a id="fn3" href="#link_fn3">3)</a> The example assumes MySQL in its default state with no root password, which of course you should never use in a live deployment!
+
+<a id="fn4" href="#link_fn4">4)</a> XML can also be used.
+
+<a id="fn5" href="#link_fn5">5)</a> Actually the *ActiveRecord* constructor.
+
+<a id="fn6" href="#link_fn6">6)</a> A *hash* or *dictionary*
+ 
+<a id="fn7" href="#link_fn6">7)</a> Although Rails has it's own conventions for this that makes use of the so-called *Assets Pipeline*.
