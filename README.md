@@ -22,7 +22,7 @@ interface as you will have seen from the recording of the session.
 
 ## 1. Create the rails application 
 
-<note>If you want to run Rails using a virtual machine, you can skip the
+**Note* If you want to run Rails using a virtual machine, you can skip the
 next step and instead go to GitHub and clone the project
 [[https://github.com/cpjobling/eg-259-rails|github.com/cpjobling/eg-259-rails]].
 You then need to go through the configuration steps detailed in the
@@ -31,23 +31,19 @@ file to install ruby and install the dependencies that will enable the
 Rails project to be run inside a virtual Ubuntu server.
 
 It will take longer, but you'll get some insight into the environment
-that Rails runs in inside a production server.</note>
-
-<cli prompt=">">
-C:\Users\cpjobling>rails new eg-259-rails
-</cli>
+that Rails runs in inside a production server.
+ 
+    C:\Users\cpjobling>rails new eg-259-rails
 
 
 
 
 
-===== 2. Start rails application and show default page =====
+## 2. Start rails application and show default page
 
-<cli prompt=">">
-C:\Users\cpjobling>cd eg-259-rails
-C:\Users\cpjobling\eg-259-rails> bundle install
-C:\Users\cpjobling\eg-259-rails> bundle exec rails server
-</cli>
+    C:\Users\cpjobling>cd eg-259-rails
+    C:\Users\cpjobling\eg-259-rails> bundle install
+    C:\Users\cpjobling\eg-259-rails> bundle exec rails server
 
 Open http://localhost:3000/ in browser.
 
